@@ -4,6 +4,7 @@ const { users } = require('../../models');
 const register = async (req, res) => {
   try {
     const { signName, signEmail, signPassword, signRole } = req.body;
+    console.log('body', req.body);
     // signRole é boolean
     // signRole - true -> 'administrator'
     // signRole - false -> 'client'
