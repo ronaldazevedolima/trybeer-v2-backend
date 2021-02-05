@@ -4,19 +4,15 @@ const { users } = require('../../models');
 const register = async (req, res) => {
   try {
     const { signName, signEmail, signPassword, signRole } = req.body;
-    console.log('body', req.body);
     // signRole é boolean
     // signRole - true -> 'administrator'
     // signRole - false -> 'client'
     const role = signRole ? 'administrator' : 'client';
-
     // Verifica se existe usuário com o mesmo email
     const user = await users.findOne({ where: { email: signEmail } });
-
-    if (user.email) {
+    if (user) {
       return res.status(200).json({ message: 'E-mail already in database.' });
     }
-
     await users.create({ name: signName, email: signEmail, password: signPassword, role });
 
     const newUser = await users.findOne({ where: { email: signEmail } });
